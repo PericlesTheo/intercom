@@ -23,7 +23,9 @@ It works with any relative path.
 There are 3 main files and a `bin` file to kickstart the process
 
 `App` represents the main logic that is responsible for filtering and returning the customers given the Dublin office location and a max distance.
-`Customer` is a wrapper around each line of the text file. It is also the parser of the file given that practically the `Customer` responsibilities are nothing more than a `Struct`
+
+`Customer` is a wrapper around each line of the text file. It is also the parser of the file given that practically the `Customer` responsibilities are nothing more than a `Struct`.
+
 `Location` is the distance calculator between different locations. It works with any type of locations although we are always feeding it the Dublin office.
 
 

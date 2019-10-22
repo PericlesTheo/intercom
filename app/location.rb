@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Coordinate
+class Location
   RADIUS_OF_EARTH = 6371
 
   attr_reader :latitude, :longitude

@@ -2,7 +2,7 @@
 
 require "json"
 
-require_relative "./coordinate.rb"
+require_relative "./location"
 
 class Customer
   def self.load_from_file(file)
@@ -13,10 +13,10 @@ class Customer
     end
   end
 
-  attr_reader :user_id, :name, :coordinates
+  attr_reader :user_id, :name, :location
 
   def initialize(latitude:, longitude:, user_id:, name:)
-    @coordinates = Coordinate.new(latitude, longitude)
+    @coordinates = Location.new(latitude, longitude)
     @user_id = user_id
     @name = name
   end

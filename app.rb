@@ -12,16 +12,18 @@ class App
                 .select { |customer| intercom_office.distance_from(customer.location) <= max_distance }
                 .sort
     print_customers(customers)
-  rescue Customer::ParsingError => e
+  rescue Customer::ParsingError, Location::Invalid => e
     print_error(e)
   end
 
   def self.print_error(error)
     puts "There seems to be an issue with the file specified"
     puts "Please run --help to see the format of the file we are expecting"
+    puts "\n"
     puts "Error"
     puts "------"
     puts error.message
+    puts "\n"
   end
 
   def self.print_customers(customers)

@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 class Location
+  class Invalid < StandardError
+  end
   RADIUS_OF_EARTH = 6371
 
   attr_reader :latitude, :longitude
 
   def initialize(latitude, longitude)
-    @latitude = latitude.to_f
-    @longitude = longitude.to_f
+    @latitude = validate_coordinate(latitude)
+    @longitude = validate_coordinate(longitude)
   end
 
   # This is the formula for calculating the distance between two points on the surface of a sphere
@@ -49,5 +51,11 @@ class Location
     delta = degrees_to_radians(other.longitude - longitude)
 
     Math.sin(delta / 2)**2
+  end
+
+  def validate_coordinate(coordinate)
+    Float(coordinate)
+  rescue ArgumentError
+    raise Invalid, "Invalid coordinate: #{coordinate}"
   end
 end

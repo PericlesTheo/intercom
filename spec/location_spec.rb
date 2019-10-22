@@ -3,6 +3,16 @@
 require_relative "../app/location"
 
 RSpec.describe Location do
+  describe "initialize" do
+    it "raises an error if latitude is not valid" do
+      expect { Location.new("1a", "111.11") }.to raise_error(described_class::Invalid, "Invalid coordinate: 1a")
+    end
+
+    it "raises an error if longitude is not valid" do
+      expect { Location.new("-11323.03", "121a") }.to raise_error(described_class::Invalid, "Invalid coordinate: 121a")
+    end
+  end
+
   describe "#distance_from" do
     it "calculates correctly the distance between the Empire State Building and London Eye" do
       london_eye = described_class.new(51.50328025, -0.119687322282424)

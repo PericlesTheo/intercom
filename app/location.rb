@@ -13,8 +13,8 @@ class Location
   # This is the formula for calculating the distance between two points on the surface of a sphere
   # The return value is in kilometers
   # https://en.wikipedia.org/wiki/Great-circle_distance
-  def distance_from(other_coordinate)
-    calculation = sin_latitudes(other_coordinate) + cos_latitudes(other_coordinate) * cos_longitude(other_coordinate)
+  def distance_from(other_location)
+    calculation = sin_latitudes(other_location) + cos_latitudes(other_location) * cos_longitude(other_location)
 
     RADIUS_OF_EARTH * Math.atan2(Math.sqrt(calculation), Math.sqrt(1 - calculation)) * 2
   end

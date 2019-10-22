@@ -5,7 +5,7 @@ require_relative "../app/location"
 RSpec.describe Location do
   describe "#distance_from" do
     it "calculates correctly the distance between the Empire State Building and London Eye" do
-      london_eye = Location.new(51.50328025, -0.119687322282424)
+      london_eye = described_class.new(51.50328025, -0.119687322282424)
       empire_state_building = Location.new(40.7484284, -73.9856546198733)
 
       distance = london_eye.distance_from(empire_state_building)
@@ -14,7 +14,7 @@ RSpec.describe Location do
     end
 
     it "returns 0 if the two coordinates are the same" do
-      london_eye = Location.new(51.50328025, -0.119687322282424)
+      london_eye = described_class.new(51.50328025, -0.119687322282424)
 
       distance = london_eye.distance_from(london_eye)
 
@@ -22,8 +22,8 @@ RSpec.describe Location do
     end
 
     it "returns 0 if the two coordinates are less than 1km away" do
-      london_eye = Location.new(51.50328025, -0.119687322282424)
-      big_ben = Location.new(51.5007, -0.1246)
+      london_eye = described_class.new(51.50328025, -0.119687322282424)
+      big_ben = described_class.new(51.5007, -0.1246)
 
       distance = london_eye.distance_from(big_ben)
 

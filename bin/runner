@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "optparse"
+require_relative "../app"
+
+# intercom_office = Location.new(53.339428, -6.25766)
+
+file_path = nil
+
+OptionParser.new do |opts|
+  opts.banner = "A command line tool to see who is within 100km from the Dublin office"
+
+  opts.on("-l", "--load FILE", "Load the JSON customer file before executing the script") do |path|
+    file_path = path
+  end
+end.parse!
+
+if file_path.nil?
+  puts "Please pass the JSON customer file. See -l"
+  exit 1
+end
+
+begin
+  file = File.open(file_path)
+rescue Errno::ENOENT
+  puts "Please pass an existing file"
+  exit 1
+end
+
+App.run(file)

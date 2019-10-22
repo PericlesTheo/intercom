@@ -16,7 +16,7 @@ class Customer
   attr_reader :user_id, :name, :location
 
   def initialize(latitude:, longitude:, user_id:, name:)
-    @coordinates = Location.new(latitude, longitude)
+    @location = Location.new(latitude, longitude)
     @user_id = user_id
     @name = name
   end

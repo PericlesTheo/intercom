@@ -1,0 +1,35 @@
+# frozen_string_literal: true
+
+require "json"
+
+require_relative "./coordinate.rb"
+
+class Customer
+  def self.load_from_file(file)
+    file.each_line.map do |line|
+      next if line.empty?
+
+      opts = JSON.parse(line).transform_keys(&:to_sym)
+
+      Customer.new(opts)
+    end
+  end
+
+  attr_reader :user_id, :name, :coordinates
+
+  def initialize(latitude:, longitude:, user_id:, name:)
+    @coordinates = Coordinate.new(latitude, longitude)
+    @user_id = user_id
+    @name = name
+  end
+
+  def <=>(other)
+    if user_id < other.user_id
+      -1
+    elsif user_id > other.user_id
+      1
+    else
+      0
+    end
+  end
+end

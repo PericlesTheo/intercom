@@ -6,8 +6,8 @@ class Coordinate
   attr_reader :latitude, :longitude
 
   def initialize(latitude, longitude)
-    @latitude = latitude
-    @longitude = longitude
+    @latitude = latitude.to_f
+    @longitude = longitude.to_f
   end
 
   # This is the formula for calculating the distance between two points on the surface of a sphere

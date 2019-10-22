@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../coordinate"
+require_relative "../app/coordinate"
 
 RSpec.describe Coordinate do
   describe "#distance_from" do

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "tempfile"
 
 require_relative "../app/customer"
@@ -6,32 +7,22 @@ require_relative "../app/customer"
 RSpec.describe Customer do
   describe ".load_from_file" do
     it "loads a list of customers from a file" do
-      file = File.open("./spec/fixtures/customers.txt")
+      File.open("./spec/fixtures/customers.txt") do |f|
+        customers = described_class.load_from_file(f)
 
-      customers = described_class.load_from_file(file)
-
-      expect(customers.size).to eq(2)
-      expect(customers.map(&:user_id)).to eq([12, 1])
-    ensure
-      file.close
+        expect(customers.size).to eq(2)
+        expect(customers.map(&:user_id)).to eq([12, 1])
+      end
     end
 
-    it "works if there are empty lines" do
-      file = Tempfile.new("empty-lines.txt")
-      data = { latitude: 51.8856167, user_id: 2, name: "Ian McArdle", longitude: "-10.4240951" }
-      file << "#{data.to_json}\n#{data.to_json}"
-      file.rewind
-
-      customers = described_class.load_from_file(file)
-
-      expect(customers.size).to eq(2)
-    ensure
-      file.close
-      file.unlink
+    it "raises a customer error if we couldn't parse the file" do
+      File.open("./spec/fixtures/customers_malformed_file.txt") do |f|
+        expect { described_class.load_from_file(f) }.to raise_error(described_class::ParsingError, /on line 1/)
+      end
     end
   end
 
-  describe "<=>" do
+  describe "#<=>" do
     it "places the customer to the end if their ID is larger than the other customer's" do
       christina = described_class.new(latitude: "52.986375", user_id: 12, name: "Christina", longitude: "-6.043701")
       maria = described_class.new(latitude: "52.986375", user_id: 11, name: "Maria", longitude: "-6.043701")

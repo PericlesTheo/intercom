@@ -11,9 +11,28 @@ class App
                 .load_from_file(file)
                 .select { |customer| intercom_office.distance_from(customer.location) <= max_distance }
                 .sort
+    print_customers(customers)
+  rescue Customer::ParsingError => e
+    print_error(e)
+  end
 
-    puts "We can invite up to #{customers.size} customers"
-    puts "-----------------------------------------------"
-    customers.each { |customer| puts "#{customer.name} with id: #{customer.user_id}" }
+  def self.print_error(error)
+    puts "There seems to be an issue with the file specified"
+    puts "Please run --help to see the format of the file we are expecting"
+    puts "Error"
+    puts "------"
+    puts error.message
+  end
+
+  def self.print_customers(customers)
+    if customers.size.zero?
+      puts "We cannot invite anybody :("
+    else
+      puts "We can invite up to #{customers.size} customers"
+      puts "-----------------------------------------------"
+      customers.each { |customer| puts "#{customer.name} with id: #{customer.user_id}" }
+    end
+
+    customers
   end
 end

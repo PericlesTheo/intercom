@@ -6,9 +6,7 @@ require_relative "./coordinate.rb"
 
 class Customer
   def self.load_from_file(file)
-    file.each_line.map do |line|
-      next if line.empty?
-
+    file.each_line.reject(&:empty?).map do |line|
       opts = JSON.parse(line).transform_keys(&:to_sym)
 
       Customer.new(opts)
